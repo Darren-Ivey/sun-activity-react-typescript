@@ -53,7 +53,7 @@ class SunActivityPage extends React.Component<{}, IState> {
                     Sunrise and Sunset
                 </h1>
                 <LocationAndDateForm
-                    fetchCoordinatesError={fetchCoordinatesError}
+                    error={fetchCoordinatesError}
                     getSunActivityPostCode={this.getSunActivityPostCode} />
                 <SunActivity
                     fetchCoordinatesError={fetchCoordinatesError}
