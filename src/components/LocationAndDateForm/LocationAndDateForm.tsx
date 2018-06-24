@@ -8,15 +8,19 @@ interface IProps {
 
 class LocationAndDateForm extends React.Component<IProps, {}> {
 
-    public fields: {};
+    public dateInput: React.RefObject<HTMLInputElement>;
+    public postcodeInput: React.RefObject<HTMLInputElement>;
 
     constructor (props: IProps) {
         super(props);
+        this.dateInput = React.createRef();
+        this.postcodeInput = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     public gatherData () {
-        return _.mapValues(this.fields, 'value');
+        const fields: any =[this.dateInput, this.postcodeInput];
+        return _.mapValues(fields, 'value');
     }
 
     public handleSubmit (e: any) {
@@ -54,11 +58,11 @@ class LocationAndDateForm extends React.Component<IProps, {}> {
                 <fieldset className="form_fieldset">
                     <div className="field">
                         <label className="field__label" htmlFor="postCode">Postcode</label>
-                        <input required={true} type="text" id="postCode" className="field__input field__input--text"  maxLength={8} />
+                        <input required={true} type="text" id="postCode" className="field__input field__input--text" maxLength={8} ref={ this.postcodeInput } />
                     </div>
                     <div className="field">
                         <label className="field__label" htmlFor="date">Date</label>
-                        <input required={true} type="date" id="date" className="field__input field__input--date" />
+                        <input required={true} type="date" id="date" className="field__input field__input--date" ref={ this.dateInput } />
                     </div>
                 </fieldset>
                 <footer className="footer">
