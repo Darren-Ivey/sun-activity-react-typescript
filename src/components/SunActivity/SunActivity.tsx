@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface IProps {
     fetchCoordinatesError: string,
-    sunActivity: string,
+    sunActivity: any,
 }
 
 class SunActivity extends React.Component<IProps, {}> {
@@ -15,7 +15,6 @@ class SunActivity extends React.Component<IProps, {}> {
         return (
             <div>
                 {this.props.fetchCoordinatesError}
-                {this.props.sunActivity}
             </div>
         )
     }

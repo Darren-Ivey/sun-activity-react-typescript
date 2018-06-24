@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface IProps {
     fetchCoordinatesError: string,
-    getSunActivityPostCode: string,
+    getSunActivityPostCode:  () => void,
 }
 
 class LocationAndDateForm extends React.Component<IProps, {}> {
@@ -15,7 +15,7 @@ class LocationAndDateForm extends React.Component<IProps, {}> {
         return (
             <div>
                 {this.props.fetchCoordinatesError}
-                {this.props.getSunActivityPostCode}
+                <span>Click here</span>
             </div>
         )
     }

@@ -1,12 +1,15 @@
+import * as moment from 'moment';
 import * as React from 'react';
+import * as SunCalc from 'suncalc';
 import LocationAndDateForm from '../components/LocationAndDateForm/LocationAndDateForm';
 import SunActivity from '../components/SunActivity/SunActivity';
+import { fetchCoordinates } from '../services/services';
 
 interface IState {
-    date: string,
+    date: Date,
     fetchCoordinatesError: string,
     postcode: string,
-    sunActivity: string,
+    sunActivity: any,
 }
 
 class SunActivityPage extends React.Component<{}, IState> {
@@ -14,15 +17,31 @@ class SunActivityPage extends React.Component<{}, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            date: "",
+            date: new Date(),
             fetchCoordinatesError: "",
-            postcode: "",
-            sunActivity: "",
+            postcode: "postcode",
+            sunActivity: {},
         };
     }
 
-    public getSunActivityPostCode () {
-        return this.state.postcode + this.state.date;
+    public getSunActivityPostCode (): void {
+        fetchCoordinates(this.state.postcode)
+            .then((response) => {
+                return {
+                    formattedDate: moment(this.state.date).toDate(),
+                    latitude: response.result.latitude,
+                    longitude: response.result.longitude
+                }
+            })
+            .then((data) => {
+                this.setState({
+                    fetchCoordinatesError: "undefined",
+                    sunActivity: SunCalc.getTimes(data.formattedDate, data.latitude, data.longitude),
+                });
+            })
+            .catch(({error}) => {
+                this.setState({fetchCoordinatesError: error});
+            })
     }
 
     public render () {
@@ -35,7 +54,7 @@ class SunActivityPage extends React.Component<{}, IState> {
                 </h1>
                 <LocationAndDateForm
                     fetchCoordinatesError={fetchCoordinatesError}
-                    getSunActivityPostCode={this.getSunActivityPostCode()} />
+                    getSunActivityPostCode={this.getSunActivityPostCode} />
                 <SunActivity
                     fetchCoordinatesError={fetchCoordinatesError}
                     sunActivity={sunActivity} />
