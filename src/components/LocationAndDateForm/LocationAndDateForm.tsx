@@ -1,33 +1,35 @@
-import * as _ from "lodash";
 import * as React from 'react';
 
 interface IProps {
     error: string,
-    getSunActivityPostCode: () => void,
+    getSunActivity: (postcode: string, date: string) => void,
 }
 
 class LocationAndDateForm extends React.Component<IProps, {}> {
 
-    public dateInput: React.RefObject<HTMLInputElement>;
-    public postcodeInput: React.RefObject<HTMLInputElement>;
+    public fields: {
+        dateInput: any,
+        postcodeInput: any
+    };
 
     constructor (props: IProps) {
         super(props);
-        this.dateInput = React.createRef();
-        this.postcodeInput = React.createRef();
+        this.fields = {
+            dateInput: React.createRef(),
+            postcodeInput: React.createRef()
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    public gatherData () {
-        const fields: any =[this.dateInput, this.postcodeInput];
-        return _.mapValues(fields, 'value');
     }
 
     public handleSubmit (e: any) {
         e.preventDefault();
-        // this.props.onSubmit(this.gatherData());
-        this.gatherData();
-    };
+
+        // TODO: Improve data gathering
+        this.props.getSunActivity (
+            this.fields.postcodeInput.current.value,
+            this.fields.dateInput.current.value
+        );
+    }
 
     public renderInputError () {
         return (
@@ -58,11 +60,11 @@ class LocationAndDateForm extends React.Component<IProps, {}> {
                 <fieldset className="form_fieldset">
                     <div className="field">
                         <label className="field__label" htmlFor="postCode">Postcode</label>
-                        <input required={true} type="text" id="postCode" className="field__input field__input--text" maxLength={8} ref={ this.postcodeInput } />
+                        <input required={true} type="text" id="postCode" className="field__input field__input--text" maxLength={8} ref={ this.fields.postcodeInput } />
                     </div>
                     <div className="field">
                         <label className="field__label" htmlFor="date">Date</label>
-                        <input required={true} type="date" id="date" className="field__input field__input--date" ref={ this.dateInput } />
+                        <input required={true} type="date" id="date" className="field__input field__input--date" ref={ this.fields.dateInput } />
                     </div>
                 </fieldset>
                 <footer className="footer">
