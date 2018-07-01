@@ -1,7 +1,14 @@
 
 const catchError = (response) => {
     if (!response.ok) {
-        throw { error: response.status };
+        switch (response.status) {
+            case 401:
+                throw { error: "UNAUTHENTICATED" };
+            case 404:
+                throw { error: "NOT_FOUND" };
+            default:
+                throw { error: "UNKNOWN_API_ERROR" };
+        }
     }
     return response;
 };
@@ -10,7 +17,7 @@ const getOptions = {
     headers: {
         "Content-Type": "application/json"
     },
-    method: 'GET',
+    method: 'GET'
 };
 
 export const fetchCoordinates = (postcode) =>

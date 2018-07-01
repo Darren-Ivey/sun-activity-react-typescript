@@ -7,7 +7,7 @@ import { fetchCoordinates } from '../services/services';
 import './SunActivityPage.css'
 
 interface IState {
-    coordinatesError: string,
+    coordinatesError: string | boolean,
     sunActivity: any,
 }
 
@@ -16,7 +16,7 @@ class SunActivityPage extends React.Component<{}, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            coordinatesError: "",
+            coordinatesError: false,
             sunActivity: {},
         };
 
@@ -34,15 +34,14 @@ class SunActivityPage extends React.Component<{}, IState> {
             })
             .then((data) => {
                 this.setState({
-                    coordinatesError: "undefined",
+                    coordinatesError: false,
                     sunActivity: SunCalc.getTimes(data.formattedDate, data.latitude, data.longitude),
-                }, () => {
-                    console.log("sunActivity: ", this.state.sunActivity)
                 });
             })
             .catch(({error}) => {
+                console.log("error: ",error)
                 this.setState({
-                    coordinatesError: "error"
+                    coordinatesError: error
                 });
             })
     }
@@ -59,7 +58,6 @@ class SunActivityPage extends React.Component<{}, IState> {
                     error={coordinatesError}
                     getSunActivity={this.getSunActivity} />
                 <SunActivity
-                    error={coordinatesError}
                     sunActivity={sunActivity} />
             </div>
         )

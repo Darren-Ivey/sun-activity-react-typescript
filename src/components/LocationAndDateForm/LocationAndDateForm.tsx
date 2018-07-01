@@ -2,7 +2,7 @@ import * as React from 'react';
 import './LocationAndDateForm.css';
 
 interface IProps {
-    error: string,
+    error: string | boolean,
     getSunActivity: (postcode: string, date: string) => void,
 }
 
@@ -51,7 +51,7 @@ class LocationAndDateForm extends React.Component<IProps, {}> {
     }
 
     public handleError () {
-        (this.props.error && this.props.error === '404') ? this.renderInputError() : this.renderServiceError();
+        return this.props.error === 'NOT_FOUND' ? this.renderInputError() : this.renderServiceError();
     }
 
     public render () {
@@ -69,7 +69,7 @@ class LocationAndDateForm extends React.Component<IProps, {}> {
                     </div>
                 </fieldset>
                 <footer className="footer">
-                    { this.handleError() }
+                    { (this.props.error !== "") && this.handleError() }
                     <button className="footer__button" type="submit">Find</button>
                 </footer>
             </form>
