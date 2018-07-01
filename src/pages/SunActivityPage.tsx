@@ -23,7 +23,11 @@ class SunActivityPage extends React.Component<{}, IState> {
         this.getSunActivity = this.getSunActivity.bind(this);
     }
 
-    public getSunActivity (postcode: string, date: string): void {
+    public getSunActivity (args: {postcode: string, date: string}): void {
+
+        const postcode = args.postcode;
+        const date = args.date;
+
         fetchCoordinates(postcode)
             .then((response) => {
                 return {
