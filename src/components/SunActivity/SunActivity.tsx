@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import * as React from 'react';
+import './SunActivity.css'
 
 interface IProps {
     error: string,

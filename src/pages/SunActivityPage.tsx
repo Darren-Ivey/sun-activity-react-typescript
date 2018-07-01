@@ -4,6 +4,7 @@ import * as SunCalc from 'suncalc';
 import LocationAndDateForm from '../components/LocationAndDateForm/LocationAndDateForm';
 import SunActivity from '../components/SunActivity/SunActivity';
 import { fetchCoordinates } from '../services/services';
+import './SunActivityPage.css'
 
 interface IState {
     coordinatesError: string,
@@ -50,8 +51,8 @@ class SunActivityPage extends React.Component<{}, IState> {
         const { sunActivity, coordinatesError } = this.state;
 
         return (
-            <div>
-                <h1>
+            <div className="page-sun-activity">
+                <h1 className="page-sun-activity__header">
                     Sunrise and Sunset
                 </h1>
                 <LocationAndDateForm
