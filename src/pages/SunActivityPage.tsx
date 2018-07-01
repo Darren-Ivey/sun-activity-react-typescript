@@ -6,7 +6,7 @@ import SunActivity from '../components/SunActivity/SunActivity';
 import { fetchCoordinates } from '../services/services';
 
 interface IState {
-    fetchCoordinatesError: string,
+    coordinatesError: string,
     sunActivity: any,
 }
 
@@ -15,7 +15,7 @@ class SunActivityPage extends React.Component<{}, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            fetchCoordinatesError: "",
+            coordinatesError: "",
             sunActivity: {},
         };
 
@@ -32,21 +32,22 @@ class SunActivityPage extends React.Component<{}, IState> {
                 }
             })
             .then((data) => {
-                console.log("Data: ",data)
                 this.setState({
-                    fetchCoordinatesError: "undefined",
+                    coordinatesError: "undefined",
                     sunActivity: SunCalc.getTimes(data.formattedDate, data.latitude, data.longitude),
+                }, () => {
+                    console.log("sunActivity: ", this.state.sunActivity)
                 });
             })
             .catch(({error}) => {
                 this.setState({
-                    fetchCoordinatesError: "error"
+                    coordinatesError: "error"
                 });
             })
     }
 
     public render () {
-        const { sunActivity, fetchCoordinatesError } = this.state;
+        const { sunActivity, coordinatesError } = this.state;
 
         return (
             <div>
@@ -54,10 +55,10 @@ class SunActivityPage extends React.Component<{}, IState> {
                     Sunrise and Sunset
                 </h1>
                 <LocationAndDateForm
-                    error={fetchCoordinatesError}
+                    error={coordinatesError}
                     getSunActivity={this.getSunActivity} />
                 <SunActivity
-                    fetchCoordinatesError={fetchCoordinatesError}
+                    error={coordinatesError}
                     sunActivity={sunActivity} />
             </div>
         )

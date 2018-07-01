@@ -1,23 +1,26 @@
+import * as moment from 'moment';
 import * as React from 'react';
 
 interface IProps {
-    fetchCoordinatesError: string,
+    error: string,
     sunActivity: any,
 }
 
-class SunActivity extends React.Component<IProps, {}> {
-
-    constructor (props: IProps) {
-        super(props)
-    }
-
-    public render () {
+const SunActivity: React.SFC<IProps> = (props) => {
+    const { sunrise, sunset } = props.sunActivity;
+    const render = () => {
         return (
-            <div>
-                {this.props.fetchCoordinatesError}
+            <div className="sun-activity-results">
+                <div className="sun-activity-results__result">
+                    Your sunrise: <span className="sun-activity-results__value">{moment(sunrise).format("HH:mm")}</span>
+                </div>
+                <div className="sun-activity-results__result">
+                    Your sunset: <span className="sun-activity-results__value">{moment(sunset).format("HH:mm")}</span>
+                </div>
             </div>
         )
-    }
-}
+    };
+    return (sunrise && sunset) ? render() : null;
+};
 
 export default SunActivity;
