@@ -10,7 +10,6 @@ const catchError = (response: any) => {
                 throw { error: "UNKNOWN_API_ERROR" };
         }
     }
-    console.log(response)
     return response;
 };
 

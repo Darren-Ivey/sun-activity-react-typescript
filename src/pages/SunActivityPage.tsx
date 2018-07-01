@@ -40,7 +40,6 @@ class SunActivityPage extends React.Component<{}, IState> {
                 });
             })
             .catch(({error}) => {
-                console.log("error: ",error)
                 this.setState({
                     coordinatesError: error
                 });
