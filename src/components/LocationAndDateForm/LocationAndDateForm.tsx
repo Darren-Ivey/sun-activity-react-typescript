@@ -69,7 +69,7 @@ class LocationAndDateForm extends React.Component<IProps, {}> {
                     </div>
                 </fieldset>
                 <footer className="footer">
-                    { (this.props.error !== "") && this.handleError() }
+                    { this.props.error && this.handleError() }
                     <button className="footer__button" type="submit">Find</button>
                 </footer>
             </form>

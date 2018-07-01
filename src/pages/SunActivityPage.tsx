@@ -33,6 +33,7 @@ class SunActivityPage extends React.Component<{}, IState> {
                 }
             })
             .then((data) => {
+                console.log("success: ")
                 this.setState({
                     coordinatesError: false,
                     sunActivity: SunCalc.getTimes(data.formattedDate, data.latitude, data.longitude),
