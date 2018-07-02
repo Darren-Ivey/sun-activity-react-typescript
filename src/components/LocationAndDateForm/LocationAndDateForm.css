@@ -1,4 +1,8 @@
 
+.form {
+    text-align: left;
+}
+
 .form_fieldset {
     box-sizing: border-box;
     margin: 0;
