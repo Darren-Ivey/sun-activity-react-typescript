@@ -9,9 +9,9 @@ interface IProps {
 
 class LocationAndDateForm extends React.Component<IProps, {}> {
 
-    public fields: {
+    private fields: {
         dateInput: React.RefObject<HTMLInputElement>,
-        postcodeInput: React.RefObject<HTMLInputElement> | any
+        postcodeInput: React.RefObject<HTMLInputElement>
     };
 
     constructor (props: IProps) {
@@ -26,7 +26,9 @@ class LocationAndDateForm extends React.Component<IProps, {}> {
     public gatherData () {
         let values: object = {};
         _.forOwn(this.fields, (field) => {
-            values = { ...values,  [field.current.name]: field.current.value }
+            if (field.current) {
+                values = {...values, [field.current.name]: field.current.value}
+            }
         });
         return values;
     }
